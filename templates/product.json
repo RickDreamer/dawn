@@ -6,12 +6,14 @@
         "vendor": {
           "type": "text",
           "settings": {
-            "text_style": "uppercase",
-            "text": "{{ product.vendor }}"
+            "text": "{{ product.vendor }}",
+            "text_style": "uppercase"
           }
         },
         "title": {
-          "type": "title"
+          "type": "title",
+          "settings": {
+          }
         },
         "subtitle": {
           "type": "text",
@@ -21,22 +23,34 @@
           }
         },
         "price": {
-          "type": "price"
+          "type": "price",
+          "settings": {
+          }
         },
         "variant_picker": {
-          "type": "variant_picker"
+          "type": "variant_picker",
+          "settings": {
+          }
         },
         "quantity_selector": {
-          "type": "quantity_selector"
+          "type": "quantity_selector",
+          "settings": {
+          }
         },
         "buy_buttons": {
-          "type": "buy_buttons"
+          "type": "buy_buttons",
+          "settings": {
+          }
         },
         "description": {
-          "type": "description"
+          "type": "description",
+          "settings": {
+          }
         },
         "share": {
-          "type": "share"
+          "type": "share",
+          "settings": {
+          }
         }
       },
       "block_order": [
@@ -49,14 +63,36 @@
         "buy_buttons",
         "description",
         "share"
-      ]
+      ],
+      "settings": {
+      }
     },
     "product-recommendations": {
-      "type": "product-recommendations"
+      "type": "product-recommendations",
+      "settings": {
+      }
+    },
+    "shogun-above": {
+      "type": "shogun-above",
+      "settings": {
+      }
+    },
+    "shogun-below": {
+      "type": "shogun-below",
+      "settings": {
+      }
+    },
+    "shogun-helper": {
+      "type": "shogun-helper",
+      "settings": {
+      }
     }
   },
   "order": [
+    "shogun-helper",
+    "shogun-above",
     "main",
-    "product-recommendations"
+    "product-recommendations",
+    "shogun-below"
   ]
 }
