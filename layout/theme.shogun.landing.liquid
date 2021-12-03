@@ -29,7 +29,7 @@ This file can be re-written at any time.
 
     <script src="{{ 'global.js' | asset_url }}" defer="defer"></script>
     {{ content_for_header }}
-
+	<script src="{{ 'checkout-v1.js' | asset_url }}" defer="defer"></script>
     {%- liquid
       assign body_font_bold = settings.type_body_font | font_modify: 'weight', 'bold'
       assign body_font_italic = settings.type_body_font | font_modify: 'style', 'italic'
@@ -109,6 +109,7 @@ This file can be re-written at any time.
     {% endstyle %}
 
     {{ 'base.css' | asset_url | stylesheet_tag }}
+    {{ 'checkout-v1.css' | asset_url | stylesheet_tag }}
 
     {%- unless settings.type_body_font.system? -%}
       <link rel="preload" as="font" href="{{ settings.type_body_font | font_url }}" type="font/woff2" crossorigin>
@@ -119,6 +120,8 @@ This file can be re-written at any time.
 
     <script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js');</script>
   
+  {% render 'shogun-head' %}
+
 </head>
 
 
