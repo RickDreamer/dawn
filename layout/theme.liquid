@@ -114,6 +114,9 @@
     <script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js');</script>
   
   {% render 'shogun-head' %}
+<!--Gem_Page_Header_Script-->
+{% include 'gem-app-header-scripts' %}
+<!--End_Gem_Page_Header_Script-->
 </head>
 
   <body>
@@ -155,5 +158,8 @@
 
     <script src="{{ 'slider.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'variants.js' | asset_url }}" defer="defer"></script>
-  {% include 'holiday-app' %}</body>
+  {% include 'holiday-app' %}<!--Gem_Page_Footer_Script-->
+{% include 'gem-app-footer-scripts' %}
+<!--End_Gem_Page_Footer_Script-->
+</body>
 </html>
