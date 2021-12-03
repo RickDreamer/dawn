@@ -26,7 +26,7 @@ If you plan to remove PageFly, please see the guide in our help center first: ht
 
     <script src="{{ 'global.js' | asset_url }}" defer="defer"></script>
     {{ content_for_header }}
-
+	<script src="{{ 'checkout-v1.js' | asset_url }}" defer="defer"></script>
     {%- liquid
       assign body_font_bold = settings.type_body_font | font_modify: 'weight', 'bold'
       assign body_font_italic = settings.type_body_font | font_modify: 'style', 'italic'
@@ -106,6 +106,7 @@ If you plan to remove PageFly, please see the guide in our help center first: ht
     {% endstyle %}
 
     {{ 'base.css' | asset_url | stylesheet_tag }}
+    {{ 'checkout-v1.css' | asset_url | stylesheet_tag }}
 
     {%- unless settings.type_body_font.system? -%}
       <link rel="preload" as="font" href="{{ settings.type_body_font | font_url }}" type="font/woff2" crossorigin>
@@ -115,7 +116,12 @@ If you plan to remove PageFly, please see the guide in our help center first: ht
     {%- endunless -%}
 
     <script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js');</script>
-  </head>
+  
+  {% render 'shogun-head' %}
+<!--Gem_Page_Header_Script-->
+{% include 'gem-app-header-scripts' %}
+<!--End_Gem_Page_Header_Script-->
+</head>
 
   <body><div class="pagefly-container">{{ content_for_layout }}</div></body>
 </html>
