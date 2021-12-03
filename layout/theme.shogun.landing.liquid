@@ -8,6 +8,7 @@ This file can be re-written at any time.
   
 <head>
   
+ {%- render 'layouthub_header' -%}
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -121,6 +122,9 @@ This file can be re-written at any time.
     <script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js');</script>
   
   {% render 'shogun-head' %}
+<!--Gem_Page_Header_Script-->
+{% include 'gem-app-header-scripts' %}
+<!--End_Gem_Page_Header_Script-->
 
 </head>
 
