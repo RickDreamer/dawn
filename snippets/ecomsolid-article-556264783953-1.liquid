@@ -1,0 +1,221 @@
+<section style="display: none !important" data-section-type="collection-template"></section> 
+<section class="gt_section-CsnKzYhln5j3eNa " data-name="Article">
+  <div class="gt_container gt_contentPageBlog">
+      <div class="contentPageBlog_container">
+          <div class="gt_container content">
+              <div class="list_item_column">
+                  <div class="item">
+                      <div class="gt_mb--medium title_date">
+                          <div class="title">
+                              <p class="gt_heading">
+                                  {{ article.title }} 
+                              </p>
+                          </div>
+                             
+                          <div class="data_item">
+                              <div class="content_data_item">
+                                  <span>{{ article.published_at | date: "%b %d, %y" }}</span>
+                              </div>
+                          </div>
+                            
+                      </div>
+                      <div class="gt_mb--medium image_item">
+                          <img class=" gt_lazyload" src="{{ article.image.src | img_url: '100x' }}" alt="{{ article.title | escape | replace: '&quot;', '&apos;' }}">
+                      </div>
+                      <div class="gt_mb--medium description_item">
+                          <p>
+                              {{ article.content }}
+                          </p>
+                      </div>
+                      
+                        {% if article.tags.size > 0 %}
+                        <ul class="gt_mb--small gt_article-tags">
+                            {% for tag in article.tags %}
+                            <li>
+                                <a href="{{ blog.url }}/tagged/{{ tag | handle }}">{{ tag }}</a>{% unless forloop.last %}{% endunless %}
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                      
+                           
+                  </div>
+              </div>
+              {%- assign new_comment = false -%}
+              {%- if comment and comment.created_at -%}
+                {%- assign new_comment = true -%}
+                {%- assign new_comment_id = comment.id -%}
+              {%- endif -%}
+              
+              {%- if new_comment -%}
+                {%- assign duplicate_comment = false -%}
+                {%- for comment in article.comments -%}
+                  {%- if comment.id == new_comment_id -%}
+                    {%- assign duplicate_comment = true -%}
+                    {% break %}
+                  {%- endif -%}
+                {%- endfor -%}
+              
+                {%- if duplicate_comment -%}
+                  {%- assign number_of_comments = article.comments_count -%}
+                {%- else -%}
+                  {%- assign number_of_comments = article.comments_count | plus: 1 -%}
+                {%- endif -%}
+                {%- else -%}
+                  {%- assign number_of_comments = article.comments_count -%}
+              {%- endif -%}
+              
+              
+              
+              {%- if blog.comments_enabled? -%}
+                {%- if number_of_comments > 0 -%}
+                  <hr aria-hidden="true">
+                  <h4>{{ article.comments_count }} comment</h4>
+                  <ul>
+              
+                    
+                    {%- if new_comment -%}
+                      <li class="gt_mb--small gt_comment_item">
+                        <div class="gt_comment_content">
+                          {{ comment.content }}
+                        </div>
+                        <span class="gt_comment_author">- {{ comment.author }} posted </span>
+                        <span class="gt_comment_time">  {{ comment.created_at | date: "%b %d, %Y" }}</span>
+                      </li>
+                    {%- endif -%}
+              
+                    {% for comment in article.comments %}
+                      {% unless comment.id == new_comment_id %}
+                        <li class="gt_mb--small gt_comment_item">
+                          <div class="gt_comment_content">
+                            {{ comment.content }}
+                          </div>
+                          <span class="gt_comment_author">- {{ comment.author }} posted</span>
+                          <span class="gt_comment_time"> {{ comment.created_at | date: "%b %d, %Y" }}</span>
+                        </li>
+                      {% endunless %}
+                    {% endfor %}
+              
+                  </ul>
+                {%- endif -%}
+              {%- endif -%}
+            
+            <div class="comment">
+              
+              {% if article.comments_enabled? %}
+              
+                <h4 class="gt_subheading gt_mb--medium h4_comment">
+                  Leave a Comment
+                </h4>
+                
+                <div class="form_comment">
+                  
+                  {% form article %}
+                    {% if form.posted_successfully? %}
+                      {% if article.moderated? %}
+                          <p class="gt_mb--small gt_comment_noti">Your comment has been added and will be published as soon as possible.</p>
+                      {% else %}
+                          <p class="gt_mb--small gt_comment_noti">Your comment has been added.</p>
+                      {% endif %}
+                    {% endif %}
+            
+                    {% if form.errors %}
+                        <p>Error, please enter all fields.</p>
+                    {% endif %}
+                    <div class="gf_flex gf_flex-sm-column gf_flex-wrap group_comment">
+                      <div class="gt_mb--small gt_comment_input">
+                        <label for="comment_author" {% if form.errors contains "author" %} class="error" {% endif %}>
+                         <p class="gt_mb--extra-small">
+                          Name
+                         </p>
+                        </label>
+                        <input type="text" id="comment_author" name="comment[author]" value="{{ form.author }}" class="gt_input field{% if form.errors contains "author" %} error{% endif %}">
+                      </div>
+                      
+                      <div class="gt_mb--small gt_comment_input">
+                        <label for="comment_email" {% if form.errors contains "email" %} class="error" {% endif %}>
+                         <p class="gt_mb--extra-small">
+                            Email
+                         </p>
+                        </label>
+                        <input type="text" id="comment_email" name="comment[email]" value="{{ form.email }}" class="gt_input field{% if form.errors contains "email" %} error{% endif %}">
+                      </div>
+                    </div>    
+
+                    <label for="comment_body" {% if form.errors contains "body" %} class="rror" {% endif %}>
+                      <p class="gt_mb--extra-small">
+                        Comment
+                      </p>
+                    </label>
+                    <div class="line_comment">
+                    <textarea class="gt_input--large gt_mb--medium" id="comment_body" name="comment[body]" {% if form.errors contains "body" %} {% endif %}>{{ form.body }}</textarea>
+                    </div>
+                    <div class="button_post">
+                      <button type="submit" class="gt_button button comment submit">POST COMMENT</button>
+                    </div>
+                {% endform %}
+                  
+                </div>
+              
+              {% endif %}
+              
+            </div> 
+          </div>
+      </div>
+      <script type="application/ld+json">{%- assign schemaArticle = article -%}
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "articleBody": "{% if schemaArticle.content %}{{ schemaArticle.content | strip_html | escape }}{% endif %}",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "{{ shop.url }}{{ page.url }}"
+  },
+  "headline": "{{ schemaArticle.title | escape}}",
+  {% if schemaArticle.excerpt != blank %}
+    "description": "{% if schemaArticle.excerpt %}{{ schemaArticle.excerpt | strip_html | escape }}{% endif %}",
+  {% endif %}
+  {% if schemaArticle.image %}
+    {% assign image_size = schemaArticle.image.width | append: 'x' %}
+    "image": [
+      "https:{{ schemaArticle | img_url: image_size }}"
+    ],
+  {% endif %}
+  "datePublished": "{{ schemaArticle.published_at | date: '%Y-%m-%dT%H:%M:%SZ' }}",
+  "dateCreated": "{{ schemaArticle.created_at | date: '%Y-%m-%dT%H:%M:%SZ' }}",
+  "author": {
+    "@type": "Person",
+    "name": "{{ schemaArticle.author | escape }}"
+  },
+  "publisher": {
+    "@type": "Organization",
+    {% if settings.share_image %}
+      {% assign image_size = settings.share_image.width | append: 'x' %}
+      "logo": {
+        "@type": "ImageObject",
+        "height": "{{ settings.share_image.height }}",
+        "url": "https:{{ settings.share_image | img_url: image_size }}",
+        "width": "{{ settings.share_image.width }}"
+      },
+    {% elsif schemaArticle.image %}
+      {% assign image_size = schemaArticle.image.width | append: 'x' %}
+      "logo": {
+        "@type": "ImageObject",
+        "height": "{{ schemaArticle.image.height }}",
+        "url": "https:{{ schemaArticle.image | img_url: image_size }}",
+        "width": "{{ schemaArticle.image.width }}"
+      },
+    {% endif %}
+    "name": "{{ shop.name | escape }}"
+  }
+}
+</script>
+  </div>
+</section>
+
+ 
+{% comment %}
+You SHOULD NOT modify source code in this page because
+It is automatically generated from EcomSolid
+Try to edit page with the live editor.
+{% endcomment %}
