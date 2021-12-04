@@ -303,6 +303,8 @@
     </div>
   </div>
   {%- render 'cart-notification' -%}
+  
+  {% render 'hypervisual' %}
 
   <product-modal id="ProductModal-{{ section.id }}" class="product-media-modal">
     <div role="dialog" aria-label="{{ 'products.modal.label' | t }}" aria-modal="true" tabindex="-1">
@@ -393,7 +395,7 @@
       </div>
     </div>
   </product-modal>
-
+  
   {% assign popups = section.blocks | where: "type", "popup" %}
   {%- for block in popups -%}
     <modal-dialog id="PopupModal-{{ block.id }}" class="product-popup-modal">
